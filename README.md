@@ -114,18 +114,44 @@ This follows a simple layered architecture:
 
 ---
 
-## 🧪 Testing Strategy
-
-### Type of Tests
-- Integration Tests
-- Validate all CRUD endpoints
-- Test full request → DB → response flow
+### 🧪 Testing Strategy
+**Integration Tests:** Validate the full request lifecycle (`Request` → `DB` → `Response`).
+**Mocking:** External GitHub API calls are **mocked** during testing to ensure reliability and avoid network dependency.
 
 ### Tools Used
 - Pytest
 - FastAPI TestClient
 
 All endpoints are covered with tests to ensure correctness and reliability.
+---
+
+## 📌 Example API Calls
+
+### Swagger UI
+After running the application, all APIs can be tested using Swagger UI:
+http://127.0.0.1:8000/docs
+
+### Create Repository (POST /repos)
+curl -X POST http://127.0.0.1:8000/repos \
+-H "Content-Type: application/json" \
+-d '{
+  "owner": "fastapi",
+  "repo_name": "fastapi"
+}'  
+
+### Get Repository (GET /repos/{id})
+curl http://127.0.0.1:8000/repos/1
+
+### Update Repository (PUT /repos/{id})
+curl -X PUT http://127.0.0.1:8000/repos/1 \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "fastapi-updated"
+}'
+
+### Delete Repository (DELETE /repos/{id})
+curl -X DELETE http://127.0.0.1:8000/repos/1
+
 
 ---
 
