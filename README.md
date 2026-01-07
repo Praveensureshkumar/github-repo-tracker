@@ -147,6 +147,7 @@ curl -X POST http://127.0.0.1:8000/repos \
 ### Get Repository (GET /repos/{id})
 ```bash
 curl http://127.0.0.1:8000/repos/1
+```
 
 ### Update Repository (PUT /repos/{id})
 ```bash
@@ -178,7 +179,6 @@ pip install -r requirements.txt
 
 ### 3️⃣ Configure Environment Variables
 ```bash
-Create .env file:
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/githubdb
 ```
 
