@@ -115,8 +115,9 @@ This follows a simple layered architecture:
 ---
 
 ### 🧪 Testing Strategy
-**Integration Tests:** Validate the full request lifecycle (`Request` → `DB` → `Response`).
-**Mocking:** External GitHub API calls are **mocked** during testing to ensure reliability and avoid network dependency.
+- **Integration Tests:** Validate the full request lifecycle (`Request` → `DB` → `Response`).
+
+- **Mocking:** External GitHub API calls are **mocked** during testing to ensure reliability and avoid network dependency.
 
 ### Tools Used
 - Pytest
@@ -129,59 +130,81 @@ All endpoints are covered with tests to ensure correctness and reliability.
 
 ### Swagger UI
 After running the application, all APIs can be tested using Swagger UI:
+```bash
 http://127.0.0.1:8000/docs
+```
 
 ### Create Repository (POST /repos)
+```bash
 curl -X POST http://127.0.0.1:8000/repos \
 -H "Content-Type: application/json" \
 -d '{
   "owner": "fastapi",
-  "repo_name": "fastapi"
+  "name": "fastapi"
 }'  
+```
 
 ### Get Repository (GET /repos/{id})
+```bash
 curl http://127.0.0.1:8000/repos/1
 
 ### Update Repository (PUT /repos/{id})
+```bash
 curl -X PUT http://127.0.0.1:8000/repos/1 \
 -H "Content-Type: application/json" \
 -d '{
   "name": "fastapi-updated"
 }'
+```
 
 ### Delete Repository (DELETE /repos/{id})
+```bash
 curl -X DELETE http://127.0.0.1:8000/repos/1
-
+```
 
 ---
 
 ## ▶️ How to Run the Project
-
 ### 1️⃣ Setup Virtual Environment
-bash
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
-2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-3️⃣ Configure Environment Variables
-
+### 3️⃣ Configure Environment Variables
+```bash
 Create .env file:
-
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/githubdb
+```
 
-4️⃣ Run the Server
+### 4️⃣ Run the Server
+```bash
 uvicorn app.main:app --reload
+```
 
-5️⃣ Open API Docs
+### 5️⃣ Open API Docs
+```bash
 http://127.0.0.1:8000/docs
+```
 
 ## Run Tests
 pytest
 
 ## Expected result:
 4 passed
+
+## ⚖️ Trade-offs & Engineering Judgment
+
+1) Synchronous Database: I utilized standard synchronous SQLAlchemy operations for simplicity and stability with the provided drivers. In a high-throughput production environment, I would migrate to asyncpg for full non-blocking performance.
+
+2) No Authentication: Skipped for this MVP to focus on architectural cleanliness and core logic.
+
+3) Indexing: Currently indexed on the Primary Key. Future improvements would include indexing the owner column for faster filtering by user.
 
 ## Conclusion
 
